@@ -2,6 +2,7 @@ const inputs = document.querySelectorAll(
   "input[type='text'], input[type='password'"
 );
 let pseudo, email, password, confirmPass;
+
 const errorDisplay = (tag, message, valid) => {
   const container = document.querySelector("." + tag + "-container");
   const span = document.querySelector("." + tag + "-container > span");
@@ -17,19 +18,27 @@ const errorDisplay = (tag, message, valid) => {
 const pseudoChecker = (value) => {
   if (value.length > 1 && (value.length < 3 || value.length > 20)) {
     errorDisplay("pseudo", "Le Pseudo doit contenir entre 2 et 20 caractères");
-    pseudo = null
+    pseudo = null;
   } else if (!value.match(/^[a-zA-Z0-9_.-]*$/)) {
     errorDisplay(
       "pseudo",
       "Le pseudo ne doit pas contenir de caractère spéciaux"
-      );
-      pseudo = null
+    );
+    pseudo = null;
   } else {
     errorDisplay("pseudo", "", true);
-    pseudo = e.target.value
+    pseudo = e.target.value;
   }
 };
-const emailChecker = (value) => {};
+const emailChecker = (value) => {
+  if (!value.match(/^[\w_-]+@[\w-]+\.[a-z]{2,4}$/i)) {
+    errorDisplay("email", "Le mail n'est pas valide");
+    email = null;
+  } else {
+    errorDisplay("email", "", true);
+    email = value;
+  }
+};
 const passwordChecker = (value) => {};
 const confirmChecker = (value) => {};
 
