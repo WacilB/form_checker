@@ -1,6 +1,7 @@
 const inputs = document.querySelectorAll(
   "input[type='text'], input[type='password'"
 );
+const form = document.querySelector("form");
 let pseudo, email, password, confirmPass;
 const progressBar = document.getElementById("progress-bar");
 const errorDisplay = (tag, message, valid) => {
@@ -27,7 +28,7 @@ const pseudoChecker = (value) => {
     pseudo = null;
   } else {
     errorDisplay("pseudo", "", true);
-    pseudo = e.target.value;
+    pseudo = value;
   }
 };
 const emailChecker = (value) => {
@@ -65,7 +66,6 @@ const passwordChecker = (value) => {
 };
 const confirmChecker = (value) => {
   if (value !== password) {
-    console.log("erreur");
     errorDisplay("confirm", "Les mots de passe ne correspondent pas");
     confirmPass = false;
   } else {
@@ -93,4 +93,26 @@ inputs.forEach((inputs) => {
         null;
     }
   });
+});
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (pseudo && email && password && confirmPass) {
+    const data = {
+      pseudo,
+      email,
+      password,
+    };
+    console.log(data);
+    inputs.forEach((input) => (input.value = ""));
+    progressBar.classList = "";
+
+    pseudo = null;
+    password = null;
+    email = null;
+    confirmPass = null;
+    alert("Inscription validée");
+  } else {
+    alert("Les champs du formulaire ne sont pas bien renseigné ");
+  }
 });
